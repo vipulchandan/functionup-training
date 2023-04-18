@@ -1,0 +1,2 @@
+The 'git restore filename' command restores the file in the working directory to its state in the last commit, while the 'git restore --staged filename' command restores the file in the staging area to its state in the last commit. This means that 'git restore filename' only affects the working directory, while 'git restore --staged filename' affects both the working directory and the staging area.
+[A[A[A[A[[B[B[B[C
