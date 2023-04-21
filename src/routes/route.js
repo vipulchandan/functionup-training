@@ -48,5 +48,54 @@ router.get('/students/:studentName', function(req, res) {
     res.send('student data')
 })
 
+router.get('/movies', (req, res) => {
+    const movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins', 'Avatar: the way of water'];
+    res.send(movies);
+})
+
+router.get('/movies/:indexNumber', (req, res) => {
+    const movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins', 'Avatar: the way of water'];
+    const moviesIndex = parseInt(req.params.indexNumber); 
+    if(isNaN(moviesIndex) || moviesIndex < 0 || moviesIndex > movies.length - 1) {
+        res.status(400).send("The index should be between 0 and " + (movies.length - 1))
+    } else {
+        res.send(movies[moviesIndex]);
+    }
+})
+
+
+const moviesObj = [ {
+    'id': 1,
+    'name': 'The Shining'
+   }, {
+    'id': 2,
+    'name': 'Incendies'
+   }, {
+    'id': 3,
+    'name': 'Rang de Basanti'
+   }, {
+    'id': 4,
+    'name': 'Finding Nemo'
+   }, {
+    'id': 5,
+    'name': 'Avatar: The way of water'
+   }]
+
+
+router.get('/films', (req, res) => {
+   res.send(moviesObj);
+})
+
+router.get('/films/:filmId', (req, res) => {
+    const moviesId = parseInt(req.params.filmId);
+    const movie = moviesObj.find(film => film.id === moviesId);
+    
+    if(movie) {
+        res.send(movie);
+    } else {
+        res.status(400).send("No movie exists with this id");
+    }
+})
+
 
 module.exports = router;
