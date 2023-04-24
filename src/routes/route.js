@@ -4,45 +4,65 @@ const router = express.Router();
 const commonFile = require('./common')
 const myUnderscore = require('underscore')
 
+
 let players =
-[
-    {
-        "name": "manish",
-        "dob": "1/1/1995",
-        "gender": "male",
-        "city": "jalandhar",
-        "sports": [
-            "swimming"
-        ]
-    },
-    {
-        "name": "gopal",
-        "dob": "1/09/1995",
-        "gender": "male",
-        "city": "delhi",
-        "sports": [
-            "soccer"
-        ],
-    },
-    {
-        "name": "lokesh",
-        "dob": "1/1/1990",
-        "gender": "male",
-        "city": "mumbai",
-        "sports": [
-            "soccer"
-        ],
-    },
-]
+   [
+       {
+           "name": "manish",
+           "dob": "1/1/1995",
+           "gender": "male",
+           "city": "jalandhar",
+           "sports": [
+               "swimming"
+           ]
+       },
+       {
+           "name": "gopal",
+           "dob": "1/09/1995",
+           "gender": "male",
+           "city": "delhi",
+           "sports": [
+               "soccer"
+           ],
+       },
+       {
+           "name": "lokesh",
+           "dob": "1/1/1990",
+           "gender": "male",
+           "city": "mumbai",
+           "sports": [
+               "soccer"
+           ],
+       },
+   ]
 
 
-router.post('/players', function (req, res) {
+   router.post('/players', function (req, res) {
+
+       const { name, dob, gender, city, sports } = req.body;
+
+       const isPlayerExist = players.find(player => player.name === name);
+
+       if(isPlayerExist) {
+        return res.send({ error: 'Player with the same name already exists!' });
+       }
+
+       const newPlayer = {
+        name,
+        dob,
+        gender,
+        city,
+        sports
+       };
+
+       players.push(newPlayer);
+
+       res.send(  { data: players , status: true }  )
+   })
 
 
-    
-    res.send(  { data: players , status: true }  )
-})
-  
+
+
 
 
 
