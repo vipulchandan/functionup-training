@@ -4,6 +4,52 @@ const router = express.Router();
 const commonFile = require('./common')
 const myUnderscore = require('underscore')
 
+let players =
+[
+    {
+        "name": "manish",
+        "dob": "1/1/1995",
+        "gender": "male",
+        "city": "jalandhar",
+        "sports": [
+            "swimming"
+        ]
+    },
+    {
+        "name": "gopal",
+        "dob": "1/09/1995",
+        "gender": "male",
+        "city": "delhi",
+        "sports": [
+            "soccer"
+        ],
+    },
+    {
+        "name": "lokesh",
+        "dob": "1/1/1990",
+        "gender": "male",
+        "city": "mumbai",
+        "sports": [
+            "soccer"
+        ],
+    },
+]
+
+
+router.post('/players', function (req, res) {
+
+
+    
+    res.send(  { data: players , status: true }  )
+})
+  
+
+
+
+
+
+
+
 router.get('/test-me', function (req, res) {
     res.send('This should be working!')
 });
@@ -96,6 +142,46 @@ router.get('/films/:filmId', (req, res) => {
         res.status(400).send("No movie exists with this id");
     }
 })
+
+router.post('/book', (req, res) => {
+    const book = req.body;
+
+    // Output the book to the console for debugging
+    // console.log(book);
+    // books.push(book);
+
+    res.send('Book is added to the database');
+});
+
+
+router.get("/sol1", function (req, res) {
+    //logic : sum of numbers is n(n+1)/2..so get sum of all numbers in array. now take sum of numbers till last digit in the array
+    let arr= [1,2,3,5,6,7];
+    let n = arr.length + 1;
+    let sumOfNum = (n * (n+1))/2;
+    let sumOfArr = arr.reduce((a,b) => a+b, 0);
+    let missingNumber = sumOfNum - sumOfArr;
+
+    ///LOGIC WILL GO HERE 
+    res.send(  { data: missingNumber  }  );
+});
+
+router.get("/sol2", function (req, res) {
+    //logic : sum of n consecutive numbers is [ n * (first + last) / 2  ]..so get sum of all numbers in array. now take sum of n consecutive numbers.. n would be length+1 as 1 number is missing
+    let arr= [33, 34, 35, 37, 38]
+    let n = arr.length + 1;
+    let sumOfNum = (n * (arr[0] + arr[arr.length - 1])) / 2;
+    let sumOfArr = arr.reduce((a, b) => a + b, 0);
+    let missingNumber = sumOfNum - sumOfArr;
+
+    ///LOGIC WILL GO HERE 
+
+    res.send(  { data: missingNumber  }  );
+});
+
+
+
+
 
 
 module.exports = router;
