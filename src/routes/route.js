@@ -44,15 +44,15 @@ router.post('/players', function (req, res) {
     const isPlayerExist = players.find(player => player.name === name);
 
     if(isPlayerExist) {
-    return res.send({ error: 'Player with the same name already exists!' });
+        return res.send({ error: 'Player with the same name already exists!' });
     }
 
     const newPlayer = {
-    name,
-    dob,
-    gender,
-    city,
-    sports
+        name,
+        dob,
+        gender,
+        city,
+        sports
     };
 
     players.push(newPlayer);
@@ -114,14 +114,13 @@ router.get('/students/:studentName', function(req, res) {
 
 
 
+const movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins', 'Avatar: the way of water'];
 
 router.get('/movies', (req, res) => {
-    const movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins', 'Avatar: the way of water'];
     res.send(movies);
 })
 
 router.get('/movies/:indexNumber', (req, res) => {
-    const movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins', 'Avatar: the way of water'];
     const moviesIndex = parseInt(req.params.indexNumber); 
     if(isNaN(moviesIndex) || moviesIndex < 0 || moviesIndex > movies.length - 1) {
         res.status(400).send("The index should be between 0 and " + (movies.length - 1))
