@@ -114,6 +114,10 @@ router.get('/students/:studentName', function(req, res) {
     res.send('student data')
 })
 
+
+
+
+
 router.get('/movies', (req, res) => {
     const movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins', 'Avatar: the way of water'];
     res.send(movies);
