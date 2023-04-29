@@ -6,62 +6,111 @@ const myUnderscore = require('underscore')
 
 
 let players =
-   [
-       {
-           "name": "manish",
-           "dob": "1/1/1995",
-           "gender": "male",
-           "city": "jalandhar",
-           "sports": [
-               "swimming"
-           ]
-       },
-       {
-           "name": "gopal",
-           "dob": "1/09/1995",
-           "gender": "male",
-           "city": "delhi",
-           "sports": [
-               "soccer"
-           ],
-       },
-       {
-           "name": "lokesh",
-           "dob": "1/1/1990",
-           "gender": "male",
-           "city": "mumbai",
-           "sports": [
-               "soccer"
-           ],
-       },
-   ]
+[
+    {
+        "name": "manish",
+        "dob": "1/1/1995",
+        "gender": "male",
+        "city": "jalandhar",
+        "sports": [
+            "swimming"
+        ]
+    },
+    {
+        "name": "gopal",
+        "dob": "1/09/1995",
+        "gender": "male",
+        "city": "delhi",
+        "sports": [
+            "soccer"
+        ],
+    },
+    {
+        "name": "lokesh",
+        "dob": "1/1/1990",
+        "gender": "male",
+        "city": "mumbai",
+        "sports": [
+            "soccer"
+        ],
+    },
+]
 
 
-   router.post('/players', function (req, res) {
+router.post('/players', function (req, res) {
 
-       const { name, dob, gender, city, sports } = req.body;
+    const { name, dob, gender, city, sports } = req.body;
 
-       const isPlayerExist = players.find(player => player.name === name);
+    const isPlayerExist = players.find(player => player.name === name);
 
-       if(isPlayerExist) {
-        return res.send({ error: 'Player with the same name already exists!' });
-       }
+    if(isPlayerExist) {
+    return res.send({ error: 'Player with the same name already exists!' });
+    }
 
-       const newPlayer = {
-        name,
-        dob,
-        gender,
-        city,
-        sports
-       };
+    const newPlayer = {
+    name,
+    dob,
+    gender,
+    city,
+    sports
+    };
 
-       players.push(newPlayer);
+    players.push(newPlayer);
 
-       res.send(  { data: players , status: true }  )
-   })
+    res.send(  { data: players , status: true }  )
+})
 
 
 
+
+let persons= [
+    {
+    name: "PK",
+    age: 10,
+    votingStatus: false
+ },
+ {
+    name: "SK",
+    age: 20,
+    votingStatus: false
+ },
+ {
+    name: "AA",
+    age: 70,
+    votingStatus: false
+ },
+ {
+    name: "SC",
+    age: 5,
+    votingStatus: false
+ },
+ {
+    name: "HO",
+    age: 40,
+    votingStatus: false
+ }
+ ]
+
+ 
+router.post('/persons', (req, res) => {
+    const votingAge = req.query.votingAge;
+
+    if(!votingAge || isNaN(votingAge)) {
+        res.status(400).send("Invalid Age, Please provide valid age number!")
+    }
+
+    let votingAgeInNum = Number(votingAge);
+
+    const newPersons = persons.filter(person => {
+        if(person.age >= votingAgeInNum) {
+            person.votingStatus = true;
+            return true;
+        }
+        return false; 
+    });
+
+    res.send({ data: newPersons, status:true });
+})
 
 
 
