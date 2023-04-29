@@ -160,4 +160,55 @@ router.post( "/post-query-2", function (req, res){
 })
 
 
+
+let persons= [
+    {
+    name: "PK",
+    age: 10,
+    votingStatus: false
+ },
+ {
+    name: "SK",
+    age: 20,
+    votingStatus: false
+ },
+ {
+    name: "AA",
+    age: 70,
+    votingStatus: false
+ },
+ {
+    name: "SC",
+    age: 5,
+    votingStatus: false
+ },
+ {
+    name: "HO",
+    age: 40,
+    votingStatus: false
+ }
+ ]
+
+ 
+router.post('/persons', (req, res) => {
+    const votingAge = req.query.votingAge;
+
+    if(!votingAge || isNaN(votingAge)) {
+        res.status(400).send("Invalid Age, Please provide valid age number!")
+    }
+
+    let votingAgeInNum = Number(votingAge);
+
+    const newPersons = persons.filter(person => {
+        if(person.age >= votingAgeInNum) {
+            person.votingStatus = true;
+            return true;
+        }
+        return false; 
+    });
+
+    res.send({ data: newPersons, status:true });
+})
+
+
 module.exports = router;
