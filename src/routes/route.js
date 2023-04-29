@@ -11,17 +11,17 @@ const { trim, changetoLowerCase, changeToUpperCase } = require('../validator/for
 
 router.get('/test-me', function (req, res) {
     // Problem 1
-    welcome();
+    // welcome();
 
     // Problem 2
-    printDate();
-    printMonth();
-    getBatchInfo();
+    // printDate();
+    // printMonth();
+    // getBatchInfo();
 
     // Problem 3 
-    trim('  functionUp  ');
-    changetoLowerCase('FUNCTIONUP');
-    changeToUpperCase('functionup');
+    // trim('  functionUp  ');
+    // changetoLowerCase('FUNCTIONUP');
+    // changeToUpperCase('functionup');
 
     // Problem 4
     const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
