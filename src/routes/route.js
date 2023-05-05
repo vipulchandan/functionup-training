@@ -13,11 +13,12 @@ router.get("/test-me", function (req, res) {
 
 
 router.post("/createBook", BookController.createBook  )
+router.get("/getAllBooks", BookController.getAllBooks  )
 
 
 
-
-// router.post("/createUser", UserController.createUser  )
+router.post("/createUser", UserController.createUser  )
+router.get("/getAllUsers", UserController.getAllUsers  )
 // router.get("/getUsersData", UserController.getUsersData)
 
 

@@ -10,23 +10,7 @@ const basicCode= async function(req, res) {
     console.log( "HEADER DATA ABOVE")
     console.log( "hey man, congrats you have reached the Handler")
     res.send({ msg: "This is coming from controller (handler)"})
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
@@ -36,11 +20,17 @@ const createUser= async function (req, res) {
     res.send({msg: savedData})
 }
 
+const getAllUsers = async(req, res) => {
+    let allUsers = await UserModel.find();
+    res.send({ msg: allUsers })
+}
+
 const getUsersData= async function (req, res) {
     let allUsers= await UserModel.find()
     res.send({msg: allUsers})
 }
 
 module.exports.createUser= createUser
+module.exports.getAllUsers= getAllUsers
 module.exports.getUsersData= getUsersData
 module.exports.basicCode= basicCode

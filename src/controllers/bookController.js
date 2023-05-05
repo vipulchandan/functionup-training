@@ -9,7 +9,10 @@ const createBook= async function (req, res) {
 }
 
 
-
+const getAllBooks = async(req, res) => {
+    let allBooks = await BookModel.find();
+    res.send({ msg: allBooks })
+}
 
 
 
@@ -73,6 +76,7 @@ const totalSalesPerAuthor = async function (req, res) {
 
 
 module.exports.createBook = createBook
+module.exports.getAllBooks = getAllBooks
 module.exports.getBooksData = getBooksData
 module.exports.updateBooks = updateBooks
 module.exports.deleteBooks = deleteBooks
