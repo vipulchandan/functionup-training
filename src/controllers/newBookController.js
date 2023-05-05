@@ -43,7 +43,7 @@ const updatePublisherBooks = async (req, res) => {
         { publisher: { $in: [penguin._id, harperCollins._id] } },
         { isHardCover: true }
     );
-    
+    console.log(penguin);
     res.send({ msg: updatedBook })
 
 }

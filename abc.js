@@ -1,0 +1,1 @@
+await UserModel.find({}).sort({ salary: -1 }).limit(1)
