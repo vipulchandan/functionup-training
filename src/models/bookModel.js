@@ -15,7 +15,8 @@ const bookSchema = new mongoose.Schema({
     },
     tags: [String],
     authorName : {
-        type: String
+        type: String,
+        required: true,
     },
     totalPages: Number,
     stockAvailable: Boolean,
