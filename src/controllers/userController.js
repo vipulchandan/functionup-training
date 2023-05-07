@@ -1,7 +1,16 @@
 const { type } = require("express/lib/response")
 const UserModel= require("../models/userModel")
 
-
+const createUser = async function (req, res) {
+    try {
+        let data = req.body;
+        let savedData = await UserModel.create(data);
+        res.send({ msg : savedData });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ msg : "Internal server error" });
+    }
+}
 
 
 const basicCode= async function(req, res) {
@@ -24,31 +33,8 @@ const basicCode= async function(req, res) {
     console.log("The request object looks like this: ", req)
     res.send({ msg: "This is coming from controller (handler)"})
     
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const createUser= async function (req, res) {
-    let data= req.body
-    let savedData= await UserModel.create(data)
-    res.send({msg: savedData})
 }
+
 
 const getUsersData= async function (req, res) {
     let allUsers= await UserModel.find()
