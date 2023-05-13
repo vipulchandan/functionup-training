@@ -9,13 +9,13 @@ const authenticate = function(req, res, next) {
         }
         
         if(!token) {
-            return res.status(500).json({ status: false, msg: "token must be present!" });
+            return res.status(401).json({ status: false, msg: "token must be present!" });
         }
         
         //validate this token
         let decodedToken = jwt.verify(token, "vipul-secret-key");
         if(!decodedToken){
-            return res.status(500).json({ status: false, msg: "Invalid token" });
+            return res.status(401).json({ status: false, msg: "Invalid token" });
         }
 
         next();
@@ -35,13 +35,13 @@ const authorise = function(req, res, next) {
         }
         
         if(!token) {
-            return res.status(500).json({ status: false, msg: "token must be present!" });
+            return res.status(401).json({ status: false, msg: "token must be present!" });
         }
         
         //validate this token
         let decodedToken = jwt.verify(token, "vipul-secret-key");
         if(!decodedToken){
-            return res.status(500).json({ status: false, msg: "Invalid token" });
+            return res.status(401).json({ status: false, msg: "Invalid token" });
         }
         
         // comapre the logged in user's id and the id in request
@@ -50,7 +50,7 @@ const authorise = function(req, res, next) {
         let userLoggedIn = decodedToken.userId;
 
         if(userLoggedIn != userToBeModified) {
-            return res.status(500).json({ status: false, msg: "User logged in is not allowed to modify requested user data!" });
+            return res.status(403).json({ status: false, msg: "User logged in is not allowed to modify requested user data!" });
         }
 
         next()

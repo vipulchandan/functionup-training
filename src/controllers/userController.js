@@ -5,9 +5,9 @@ const createUser = async (req, res) => {
   try{
     let data = req.body;
     let savedData = await userModel.create(data);
-    res.send({ status: true, msg: savedData });
+    res.status(201).send({ status: true, msg: savedData });
   } catch(err){
-    res.status(500).json({ status: false, msg: err.message });
+    res.status(500).send({ status: false, msg: err.message });
   }
 }
 
@@ -17,7 +17,7 @@ const loginUser = async (req, res) => {
     let password = req.body.password;
     let user = await userModel.findOne({ emailId: email, password: password });
     if(!user) {
-      return res.status(500).json({ 
+      return res.status(401).json({ 
         status: false, 
         msg: "Incorrect emailId or password" 
       });
@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
     )
     
     res.header("x-auth-token", token);
-    res.send({ status: true, token: token });
+    res.status(200).send({ status: true, token: token });
 
   } catch(err) {
     res.status(500).json({ status: false, msg: err.message });
@@ -51,7 +51,7 @@ const getUserData = async (req, res) => {
       return res.status(404).json({ status: false, msg: "User not found" });
     }
 
-    res.send({ status: true, data: user });
+    res.status(200).send({ status: true, data: user });
 
   } catch (err) {
     res.status(500).json({ status: false, msg: err.message });
@@ -74,7 +74,7 @@ const updateUser = async (req, res) => {
       {new: true}
     );
 
-    res.send({ status: true, data: updatedUser });
+    res.status(201).send({ status: true, data: updatedUser });
 
   } catch(err){
     res.status(500).json({ status: false, msg: err.message });
@@ -92,7 +92,7 @@ const deleteUser = async (req, res) => {
     user.isDeleted = true;
     await user.save();
 
-    res.send({ status: true, message: 'User deleted successfully' });
+    res.status(200).send({ status: true, message: 'User deleted successfully' });
   } catch(err){
     res.status(500).json({ status: false, msg: err.message });
   }
