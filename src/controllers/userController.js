@@ -35,7 +35,7 @@ const loginUser = async (req, res) => {
     )
     
     res.header("x-auth-token", token);
-    res.status(200).send({ status: true, token: token });
+    res.status(201).send({ status: true, token: token });
 
   } catch(err) {
     res.status(500).json({ status: false, msg: err.message });
@@ -74,7 +74,7 @@ const updateUser = async (req, res) => {
       {new: true}
     );
 
-    res.status(201).send({ status: true, data: updatedUser });
+    res.status(200).send({ status: true, data: updatedUser });
 
   } catch(err){
     res.status(500).json({ status: false, msg: err.message });
