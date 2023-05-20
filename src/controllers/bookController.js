@@ -82,39 +82,116 @@ const BookModel= require("../models/bookModel")
 
 
 const createBook = async (req, res) => {
-    const data = req.body
-    const createdBook = await BookModel.create(data);
-    res.send({ msg: createdBook })
+    try {
+        let data = req.body
+        let createdBook = await BookModel.create(data);
+        res.status(201).send({
+            status: true,
+            msg: "Book created successfully",
+            data: createdBook
+        })
+    } catch (err) {
+        res.status(500).send({ 
+            status: false,
+            msg: err.message 
+        })
+    }
 }
 
 const bookList = async (req, res) => {
-    const books = await BookModel.find().select({ bookName: 1, authorName: 1, _id: 0 });
+    try {
+        let books = await BookModel.find().select({ 
+            bookName: 1, 
+            authorName: 1, 
+            _id: 0 
+        });
+        res.status(200).send({
+            status: true,
+            msg: "Book fetched successfully",
+            data: books
+        })
     res.send({ msg: books });
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
+    }
 }
 
 const getBooksInYear = async (req, res) => {
-    let { year } = req.body
-    let books = await BookModel.find({ year })
-    res.send({ msg: books });
+    try {
+        let { year } = req.body
+        let books = await BookModel.find({ year })
+        res.status(200).send({
+            status: true,
+            msg: "Book fetched successfully",
+            data: books
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
+    }
 }
 
 
 const getParticularBooks = async (req, res) => {
-    let books = await BookModel.find({ 
-        $or: [{bookName: "Pride and Prejudice"}, {year: 2022}] })
-    res.send({ msg: books });
+    try {
+        let books = await BookModel.find(req.body);
+        res.status(200).send({
+            status: true,
+            msg: "Book fetched successfully",
+            data: books
+        })
+    } catch(err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
+    }
 }
 
 const getXINRBooks = async (req, res) => {
-    let books = await BookModel.find({ 'prices.indianPrice' : { $in: ['100INR', '200INR'] } })
-    res.send({ msg: books })
+    try {
+        let books = await BookModel.find({ 'prices.indianPrice' : { $in: ['100INR', '200INR', '500INR'] } })
+        res.status(200).send({
+            status: true,
+            msg: "Book fetched successfully",
+            data: books
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
+    }  
 }
 
 const getRandomBooks = async (req, res) => {
-    let books = await BookModel.find({
-        $or: [{ stockAvailable:true }, { totalPages: { $gt: 500 } }]
-    })
-    res.send({ msg: books })
+    try {
+        let books = await BookModel.find({
+            $or: [{ stockAvailable:true }, { totalPages: { $gt: 500 } }]
+        });
+        res.status(200).send({
+            status: true,
+            msg: "Book fetched successfully",
+            data: books
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
+    }
 }
 
-module.exports= { createBook, bookList, getBooksInYear, getParticularBooks, getXINRBooks, getRandomBooks }
+module.exports= { 
+    createBook, 
+    bookList, 
+    getBooksInYear, 
+    getParticularBooks, 
+    getXINRBooks, 
+    getRandomBooks 
+}
