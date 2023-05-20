@@ -3,27 +3,61 @@ const BookModel= require("../models/bookModel")
 const AuthorModel = require('../models/authorModel')
 
 const createBook= async function (req, res) {
-    let data= req.body
-
-    let savedData= await BookModel.create(data)
-    res.send({msg: savedData})
+    try {
+        let data= req.body
+        let savedData= await BookModel.create(data)
+        res.status(201).send({
+            status: true,
+            msg: "Book created successfully",
+            data: savedData
+        })
+        res.send({msg: savedData})
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
+    }
 }
 
 const getBooks = async (req, res) => {
-    let author = await AuthorModel.findOne({ author_name: "J.k Rowling" });
-    let books = await BookModel.find({ author_id: author.author_id });
-    res.send({ msg: books })
+    try {
+        let authorName = req.body.author_name;
+        let author = await AuthorModel.findOne({ author_name: authorName });
+        let books = await BookModel.find({ author_id: author.author_id });
+        res.status(200).send({
+            status: true,
+            msg: "Books fetched successfully",
+            data: books
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
+    }
 }
 
 
 const getAuthorBook = async (req, res) => {
-    let book = await BookModel.find({price: {$gte: 50, $lte: 150}}).select({ author_id :1, _id : 0})
-    let result = []
-    for ( let i = 0 ; i<book.length; i++){
-        let x = await AuthorModel.find(book[i]).select({ author_name : 1, _id : 0});
-        result.push(x)
+    try {
+        let book = await BookModel.find({price: {$gte: 50, $lte: 150}}).select({ author_id :1, _id : 0})
+        let result = []
+        for ( let i = 0 ; i<book.length; i++){
+            let x = await AuthorModel.find(book[i]).select({ author_name : 1, _id : 0});
+            result.push(x)
+        }
+        res.status(200).send({
+            status: true,
+            msg: "Books fetched successfully",
+            data: result
+        })
+    } catch (err) {
+        res.status(500).send({
+            status: false,
+            msg: err.message
+        })
     }
-    res.send({ msg: result })
 }
 
 
@@ -37,7 +71,6 @@ const getAuthorBook = async (req, res) => {
 //     if (allBooks.length > 0 )  res.send({msg: allBooks, condition: true})
 //     else res.send({msg: "No books found" , condition: false})
 // }
-
 
 // const updateBooks= async function (req, res) {
 //     let data = req.body // {sales: "1200"}
@@ -65,9 +98,6 @@ const getAuthorBook = async (req, res) => {
 //      res.send( { msg: allBooks})
 // }
 
-
-
-
 // CRUD OPERATIONS:
 // CREATE
 // READ
@@ -76,4 +106,8 @@ const getAuthorBook = async (req, res) => {
 
 
 
-module.exports = { createBook, getBooks, getAuthorBook}
+module.exports = { 
+    createBook, 
+    getBooks, 
+    getAuthorBook
+}
