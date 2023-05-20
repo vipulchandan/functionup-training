@@ -23,18 +23,22 @@ app.use (
 
 
 const assignmentMW = (req, res, next) => {
-    var currentDate = new Date();
-    var dateTime = currentDate.getDate() + " " +
-    (currentDate.getMonth() + 1) + " " +
-    currentDate.getFullYear() + " " +
-    currentDate.getHours() + " " +
-    currentDate.getMinutes() + " " +
-    currentDate.getSeconds();
+    try {
+        var currentDate = new Date();
+        var dateTime = currentDate.getDate() + " " +
+        (currentDate.getMonth() + 1) + " " +
+        currentDate.getFullYear() + " " +
+        currentDate.getHours() + " " +
+        currentDate.getMinutes() + " " +
+        currentDate.getSeconds();
 
-    let ip = req.ip;
-    let url = req.originalUrl;
-    console.log(`${dateTime}, ${ip}, ${url}`);
-    next();
+        let ip = req.ip;
+        let url = req.originalUrl;
+        console.log(`${dateTime}, ${ip}, ${url}`);
+        next();
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 app.use(assignmentMW);
