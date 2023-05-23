@@ -5,22 +5,31 @@ const authenticateUser = (req, res, next) => {
     try {
         let token = req.headers["x-Auth-Token"];
         if(!token) {
-        token = req.headers["x-auth-token"];
+            token = req.headers["x-auth-token"];
         }
 
         if(!token) {
-        return res.status(500).json({ status: false, msg: "token must be present!" });
+            return res.status(401).send({ 
+                status: false, 
+                msg: "token must be present!" 
+            });
         }
 
         let decodedToken = jwt.verify(token, "vipul-secret-key");
         if(!decodedToken){
-        return res.status(500).json({ status: false, msg: "Invalid token" });
+            return res.status(401).send({ 
+                status: false, 
+                msg: "Invalid token" 
+            });
         }
 
         next();
 
-    } catch(err) {
-        res.status(500).json({ status: false, msg: err.message });
+    } catch (err) {
+        res.status(500).send({ 
+            status: false, 
+            msg: err.message 
+        });
     }
 }
 

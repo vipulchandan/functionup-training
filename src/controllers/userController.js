@@ -5,9 +5,16 @@ const createUser = async (req, res) => {
   try{
     let data = req.body;
     let savedData = await userModel.create(data);
-    res.send({ status: true, msg: savedData });
+    res.status(201).send({ 
+      status: true, 
+      msg: "User created successfully",
+      data: savedData 
+    });
   } catch(err){
-    res.status(500).json({ status: false, msg: err.message });
+    res.status(500).send({ 
+      status: false, 
+      msg: err.message 
+    });
   }
 }
 
@@ -17,7 +24,7 @@ const loginUser = async (req, res) => {
     let password = req.body.password;
     let user = await userModel.findOne({ emailId: email, password: password });
     if(!user) {
-      return res.status(500).json({ 
+      return res.status(401).send({ 
         status: false, 
         msg: "Incorrect emailId or password" 
       });
@@ -31,14 +38,22 @@ const loginUser = async (req, res) => {
         organization: "FunctionUP",
         city: "Ranchi"
       },
-      "vipul-secret-key"
+      "vipul-secret-key",
+      { expiresIn: "1h" }
     )
     
     res.header("x-auth-token", token);
-    res.send({ status: true, token: token });
+    res.status(201).send({ 
+      status: true, 
+      msg: "User logged in successfully",
+      token: token 
+    });
 
   } catch(err) {
-    res.status(500).json({ status: false, msg: err.message });
+    res.status(500).send({ 
+      status: false,
+      msg: err.message 
+    });
   }
 }
 
@@ -61,13 +76,23 @@ const getUserData = async (req, res) => {
     let userId = req.params.userId;
     let user = await userModel.findById(userId);
     if(!user) {
-      return res.status(404).json({ status: false, msg: "User not found" });
+      return res.status(404).send({ 
+        status: false, 
+        msg: "User not found" 
+      });
     }
 
-    res.send({ status: true, data: user });
+    res.status(200).send({ 
+      status: true,
+      msg: "User fetched successfully", 
+      data: user 
+    });
 
   } catch (err) {
-    res.status(500).json({ status: false, msg: err.message });
+    res.status(500).send({ 
+      status: false, 
+      msg: err.message 
+    });
   }
 }
 
@@ -77,7 +102,10 @@ const updateUser = async (req, res) => {
     let userId = req.params.userId;
     let user = await userModel.findById(userId);
     if(!user) {
-      return res.status(404).json({ status: false, msg: "User not found" });
+      return res.status(404).send({ 
+        status: false, 
+        msg: "User not found" 
+      });
     }
 
     let userData = req.body;
@@ -87,10 +115,17 @@ const updateUser = async (req, res) => {
       {new: true}
     );
 
-    res.send({ status: true, data: updatedUser });
+    res.status(200).send({ 
+      status: true, 
+      msg: "User updated successfully",
+      data: updatedUser 
+    });
 
   } catch(err){
-    res.status(500).json({ status: false, msg: err.message });
+    res.status(500).send({ 
+      status: false, 
+      msg: err.message 
+    });
   }
 }
 
@@ -100,14 +135,23 @@ const deleteUser = async (req, res) => {
     let userId = req.params.userId;
     let user = await userModel.findById(userId);
     if(!user) {
-      res.status(404).json({ status: false, msg: "User not found" });
+      res.status(404).send({ 
+        status: false, 
+        msg: "User not found" 
+      });
     }
     user.isDeleted = true;
     await user.save();
 
-    res.send({ status: true, message: 'User deleted successfully' });
+    res.status(200).send({ 
+      status: true, 
+      message: 'User deleted successfully' 
+    });
   } catch(err){
-    res.status(500).json({ status: false, msg: err.message });
+    res.status(500).send({ 
+      status: false, 
+      msg: err.message 
+    });
   }
 }
 
