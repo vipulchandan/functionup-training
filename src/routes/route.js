@@ -9,17 +9,16 @@ router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
-
-
-
 router.post("/createBook", BookController.createBook  )
 router.get("/getAllBooks", BookController.getAllBooks  )
-
-
+router.post("/getBooksData/:bookId", BookController.getBooksData  )
+router.put("/updateBooks/:bookId", BookController.updateBooks  )
+router.delete("/deleteBooks/:bookId", BookController.deleteBooks  )
+router.get("/totalSalesPerAuthor", BookController.totalSalesPerAuthor  )
 
 router.post("/createUser", UserController.createUser  )
 router.get("/getAllUsers", UserController.getAllUsers  )
-// router.get("/getUsersData", UserController.getUsersData)
+router.get("/getUsersData", UserController.getUsersData)
 
 
 // const mid1= function ( req, res, next) {
@@ -45,19 +44,10 @@ router.get("/getAllUsers", UserController.getAllUsers  )
 // router.get('/termsAndConditions',  UserController.termsAndConditions)
 // router.get('/register',  UserController.register)
 
-
-
-
-
 router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
-
-
 
 // router.get("/basicRoute2", commonMW.mid1, UserController.basicCode2)
 // router.get("/basicRoute3", commonMW.mid2, UserController.basicCode3)
 // router.get("/basicRoute4", commonMW.mid1, commonMW.mid4, UserController.basicCode4)
-
-
-
 
 module.exports = router;
